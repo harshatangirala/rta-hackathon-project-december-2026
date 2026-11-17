@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DemandPulse Team 7</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#16202a;--mut:#5d6b78;--line:#dfe4ea;--acc:#c8102e;--blue:#1f5fbf;--ok:#1b7f4b;--warn:#b26a00;--bar2:#a9b4bf}
+@media(prefers-color-scheme:dark){:root{--bg:#0f151b;--card:#18212a;--ink:#e8edf2;--mut:#9fb0bf;--line:#2a3743;--acc:#ff5a73;--blue:#6aa5ff;--ok:#4cc38a;--warn:#f0b34a;--bar2:#5b6b7a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif}
+.w{max-width:1100px;margin:0 auto;padding:16px}
+h1{margin:0;font-size:26px}h2{font-size:18px;margin:0 0 6px}p{margin:6px 0;color:var(--mut)}
+.ban{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--acc);padding:10px 14px;border-radius:8px;margin:12px 0}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.k div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.k b{display:block;font-size:22px}.k span{color:var(--mut);font-size:12px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:14px 0;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:middle}
+th{color:var(--mut);font-weight:600}
+.b{position:relative;height:16px;margin:2px 0;background:transparent;min-width:150px}
+.b i{position:absolute;left:0;top:0;bottom:0;background:var(--blue);border-radius:3px}.b.n i{background:var(--bar2)}
+.b span{position:relative;font-size:11px;padding-left:4px;color:#fff;mix-blend-mode:normal}
+.b.n span{color:var(--ink)}
+.p{position:relative;height:14px;min-width:110px;background:var(--line);border-radius:3px}
+.p i{position:absolute;left:0;top:0;bottom:0;background:var(--blue);border-radius:3px}
+.p u{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--acc)}
+.pos{color:var(--ok);font-weight:600}.neg{color:var(--acc);font-weight:600}
+.tag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;border:1px solid var(--line);color:var(--mut)}
+ul{margin:6px 0 6px 18px;padding:0}li{margin:4px 0}
+.sm{font-size:12px;color:var(--mut)}
+</style></head><body><div class="w">
+<h1>DemandPulse</h1>
+<p>RTA Future Move Hackathon - Team 7 - bus demand forecast, capacity and reliability flags, cost-neutral swap scenario</p>
+<div class="ban"><b>Data period:</b> ACTUAL observations for one day, Monday 15 Dec 2025 (Nol card taps and bus running times). GTFS is the planned Sep-Dec 2026 timetable and is not compared with 2025 as the same period. No weekly, seasonal or event claims are made.</div>
+<div class="k" id="kpis"></div>
+
+<section><h2>1. Forecast: can we see route demand 15 and 60 minutes ahead?</h2>
+<p>Boardings per route and 15-minute slot, 117 routes (88.5% of boardings). Models trained on 02:00-13:59 and tested on 14:00-23:59 (never seen). Baseline = the last value known at forecast time (15 or 60 minutes earlier). Blue = model, grey = baseline; MAE in boardings per route-slot (lower is better).</p>
+<table><thead><tr><th>Horizon</th><th>Segment</th><th>Rows</th><th>MAE model / baseline</th><th>WAPE model vs baseline</th><th>MAE gain</th></tr></thead><tbody id="fc"></tbody></table>
+<p class="sm">Ridge regression chosen by lowest test MAE (15 min: Ridge 16.72, Random forest 16.96, XGBoost 17.45; 60 min: Ridge 21.39, Random forest 21.96, XGBoost 22.07). Predictions clipped at 0. The 15-minute gain is clear; the 60-minute gain is modest. MAPE is better in 5 of 6 cases, worse off-peak at 60 min (it is unstable at low counts). Errors remain large, so use as decision support, not as exact counts.</p></section>
+
+<section><h2>2. Where capacity and reliability do not match demand</h2>
+<ul>
+<li><b id="s_hi"></b> route-hours with high demand pressure (boardings per offered place per hour at least 1.0), carrying only <b id="s_hip"></b>% of boardings.</li>
+<li><b id="s_un"></b> route-hours under-used (at most 0.25) out of <b id="s_m"></b> route-hours matched to running-time data.</li>
+<li><b id="s_ur"></b> route-hours where at least 30% of timed departures ran more than 5 minutes late.</li>
+</ul>
+<p class="sm">Demand pressure is a screening proxy (boardings divided by seats offered), not on-board load. Boardings are card taps (CKI) only. 166 of 200 routes and 3,001 of 3,727 route-hours match the running-time data; the rest cannot be judged.</p>
+<table><thead><tr><th>Route</th><th>Boardings</th><th>Peak hour</th><th>Max pressure (red line = 1.0)</th><th>High</th><th>Under-used</th><th>Late hrs</th><th>Median delay s</th><th>Avg bus capacity</th><th>Commentary <span class="tag" id="mode"></span></th></tr></thead><tbody id="rt"></tbody></table></section>
+
+<section><h2>3. Cost-neutral bus-swap scenario <span class="tag">WHAT-IF, NOT MEASURED</span></h2>
+<p>Same buses, same trips, same hour: move a large bus from an under-used route-hour to a high-pressure route-hour that currently has a smaller bus. A donor must stay at or below 0.50 after the swap. No trip is removed.</p>
+<div class="k" id="sc"></div>
+<p class="sm">Only 13 of the 28 high-pressure route-hours fall below 1.0 in the scenario; 15 remain and would need other measures (standby trip) or on-board load data to confirm.</p></section>
+
+<section><h2>4. Decision: what RTA should change, why, and what difference it could make</h2>
+<ul>
+<li><b>Change 1 - right-size vehicles by hour, keep every trip.</b> Pilot the swaps listed above on the receiving and donating route-hours.<br><i>Why:</i> 1,262 route-hours run at or below 25% boardings per seat while 28 reach 1.0 or more.<br><i>Measure:</i> demand pressure at the busiest hour of each pilot route, before and after.</li>
+<li><b>Change 2 - review running-time buffers</b> on route-hours with at least 30% of departures more than 5 minutes late (761 route-hours; e.g. X13, F27, 88, C01).<br><i>Why:</i> late running erodes passenger service quality.<br><i>Measure:</i> share of departures more than 5 minutes late, per route-hour.</li>
+<li><b>Change 3 - use the 15-minute forecast as an early-warning input for standby decisions</b> (18% lower error than the last-slot baseline); treat the 60-minute view as indicative (6% lower).<br><i>Measure:</i> forecast WAPE on live days.</li>
+</ul>
+<p><b>Guardrails:</b> no fare changes, no frequency cuts (network equity), no new infrastructure, driver rest and vehicle types respected. Scenario figures come from one day of data and need on-board load (APC) confirmation before rollout.</p></section>
+
+<section><h2>5. AI agent layer</h2>
+<p id="agent"></p>
+<p class="sm">Agents explain and run guardrail checks on route summary tables only (no card or driver identifiers). They never compute the numbers; every number above comes from Dataiku recipes.</p></section>
+
+<section><h2>6. Data handling and limits</h2>
+<ul><li>NOL_ID and Driver_id are excluded from every analytical dataset; source datasets were not modified.</li>
+<li>One observed day: intraday forecasts only; the test half contains the evening peak but not the morning peak.</li>
+<li>Fleet capacity 0 treated as unknown; 99.7% of running-time events matched a bus with valid capacity.</li>
+<li>6,283 running-time events with an hour outside 0-23 were excluded.</li></ul></section>
+<p class="sm">Snapshot of Dataiku outputs forecast_metrics, decision_summary and route_evidence_card (17 Nov 2026).</p>
+</div>
+<script>
+var AGENT_MODE='RULE-BASED';
+var S={taps:1056343,hi:28,hip:1.1,un:1262,m:3001,ur:761,sw:18,below:13,moved:792};
+var K=[[S.taps.toLocaleString(),'card taps analysed (15 Dec 2025)'],['117','routes forecast (88.5% of boardings)'],['+18.3%','15-min MAE gain vs baseline'],['+6.1%','60-min MAE gain vs baseline'],[S.hi,'high-pressure route-hours'],[S.un.toLocaleString(),'under-used route-hours'],[S.ur,'unreliable route-hours'],['0','trips removed in the scenario']];
+var F=[[15,'All test rows',4680,[16.680,23.79,47.45,30.89],[20.409,29.49,56.45,37.80]],
+[15,'Evening peak',1872,[20.959,28.66,38.43,27.46],[26.042,35.86,47.22,34.12]],
+[15,'Off-peak',2808,[13.827,19.90,54.14,35.36],[16.654,24.33,63.28,42.59]],
+[60,'All test rows',4680,[21.334,30.53,60.68,39.51],[22.731,33.32,60.93,42.09]],
+[60,'Evening peak',1872,[26.661,37.53,43.66,34.93],[28.131,38.87,46.45,36.85]],
+[60,'Off-peak',2808,[17.783,24.80,73.29,45.47],[19.130,29.03,71.65,48.92]]];
+var R=[['F24',12201,18,0.569,0,3,0,37.75,105.8],['F15',11405,18,0.797,0,1,6,87.5,92.4],['88',9661,18,0.617,0,0,7,168.5,70.0],['28',9400,18,0.635,0,1,0,101.0,104.1],['F23',8983,18,0.584,0,2,0,58.5,100.7],['F22',8728,18,0.514,0,8,0,42.0,108.6],['13D',8462,8,0.377,0,11,3,77.0,113.0],['C01',8345,18,1.867,1,12,9,162.25,113.0],['F23A',8285,18,0.606,0,2,0,44.0,101.8],['93',7871,7,0.570,0,2,0,82.0,70.6],['310',7856,7,0.826,0,0,6,135.25,70.2],['C10',7622,18,0.670,0,1,7,139.0,68.1],['F27',7542,18,0.884,0,0,11,96.25,86.1],['X13',7240,18,0.510,0,0,10,204.0,69.7],['C26',6606,18,0.582,0,3,3,112.0,68.7],['X25',6537,7,0.841,0,7,2,103.5,108.0],['F46',6465,7,0.713,0,1,6,164.0,66.0]];
+function $(i){return document.getElementById(i)}
+function card(v,l){return '<div><b>'+v+'</b><span>'+l+'</span></div>'}
+$('kpis').innerHTML=K.map(function(k){return card(k[0],k[1])}).join('');
+$('sc').innerHTML=[card(S.sw,'swaps (same buses, same trips)'),card(S.moved,'seats reallocated between route-hours'),card(S.below+' of '+S.hi,'high-pressure route-hours below 1.0 after swap'),card('0','trips removed')].join('');
+['hi','hip','un','m','ur'].forEach(function(k){$('s_'+k).textContent=(S[k]).toLocaleString()});
+var mx=Math.max.apply(null,F.map(function(r){return r[4][0]}));
+$('fc').innerHTML=F.map(function(r){var g=(1-r[3][0]/r[4][0])*100;
+return '<tr><td>'+r[0]+' min</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td><div class="b"><i style="width:'+(r[3][0]/mx*100)+'%"></i><span>'+r[3][0]+'</span></div><div class="b n"><i style="width:'+(r[4][0]/mx*100)+'%"></i><span>'+r[4][0]+'</span></div></td><td>'+r[3][3]+'% vs '+r[4][3]+'%</td><td class="'+(g>0?'pos':'neg')+'">'+(g>0?'+':'')+g.toFixed(1)+'%</td></tr>'}).join('');
+function say(r){var t='Route '+r[0]+': '+r[1]+' boardings on 15 Dec 2025, busiest hour '+('0'+r[2]).slice(-2)+':00.';
+if(r[4]>0)t+=' '+r[4]+' hour(s) with high demand pressure (max '+r[3].toFixed(2)+'): consider a larger bus at those hours and confirm on-board load.';
+if(r[5]>0)t+=' '+r[5]+' hour(s) under-used: right-size the vehicle, keep all trips.';
+if(r[6]>0)t+=' '+r[6]+' hour(s) with 30% or more of departures over 5 min late: review running-time buffers.';
+if(!r[4]&&!r[5]&&!r[6])t+=' No change suggested.';return t}
+$('mode').textContent=AGENT_MODE;
+$('rt').innerHTML=R.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td>'+r[1].toLocaleString()+'</td><td>'+('0'+r[2]).slice(-2)+':00</td><td><div class="p"><i style="width:'+Math.min(r[3]/2,1)*100+'%"></i><u style="left:50%"></u></div>'+r[3].toFixed(2)+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td><td>'+r[8].toFixed(0)+'</td><td class="sm">'+say(r)+'</td></tr>'}).join('');
+$('agent').textContent=AGENT_MODE==='RULE-BASED'?'Status: the route commentary above is RULE-BASED (deterministic text generated from the table values). LLM agent output (demand and capacity specialist, reliability specialist, coordinator with guardrail check) replaces it when produced in the Flow.':'Status: commentary produced by the LLM agent chain on summary tables, checked against the guardrails.';
+</script></body></html>

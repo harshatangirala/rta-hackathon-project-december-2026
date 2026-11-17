@@ -1,0 +1,33 @@
+<section id="architecture" class="alt tight">
+<div class="head">
+<p class="eyebrow">THE DATAIKU FLOW</p>
+<h2 class="title">Seven zones, two branches, one cleaned demand table</h2>
+</div>
+<div class="flowrow">
+<div class="node"><h3 class="node-title">Source Data</h3><p class="node-text">4 linked datasets, unchanged</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node"><h3 class="node-title">Cleaning &amp; Quality</h3><p class="node-text">Card and driver IDs dropped</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node"><h3 class="node-title">Demand Preparation</h3><p class="node-text">117 × 96 grid, empty slots = 0</p></div>
+</div>
+<div class="lane lane-fc">
+<p class="lane-label">FORECAST BRANCH</p>
+<div class="flowrow">
+<div class="node"><h3 class="node-title">Forecasting &amp; Evaluation</h3><p class="node-text">Lags, time split, Ridge vs Random forest vs XGBoost</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node-hl"><h3 class="node-title">forecast_metrics</h3><p class="node-text">18.3% lower MAE at 15 min, 6.1% at 60 min</p></div>
+</div>
+</div>
+<div class="lane lane-dec">
+<p class="lane-label">DECISION BRANCH</p>
+<div class="flowrow">
+<div class="node"><h3 class="node-title">Fleet &amp; Route Ops</h3><p class="node-text">Demand pressure, flags, swaps</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node"><h3 class="node-title">Crowding &amp; Reporting</h3><p class="node-text">Hotspots, alternatives, report</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node-hl"><h3 class="node-title">AI Decision Support</h3><p class="node-text">Agents + number checker</p></div>
+</div>
+</div>
+<p class="note">Both branches feed two Dataiku webapps · 71 objects: 39 datasets, 30 recipes, 2 saved models · 25 of 30 recipes are visual</p>
+<aside>The Flow is organised in seven colour-coded zones. Raw data is cleaned once and aggregated once, then used twice. The forecast branch is validated on its own and ends in forecast_metrics. The decision branch uses observed demand, running times and fleet capacity, and feeds the AI agents and the control-room webapp. Be honest if asked: the forecast does not yet feed the decision recipe; wiring it in as an early warning is the next step. Python is used only in five places: forecast metrics, the decision engine and swap, segment geometry, the agent case file and the answer checker.</aside>
+</section>

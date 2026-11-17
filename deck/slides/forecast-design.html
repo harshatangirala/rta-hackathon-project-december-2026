@@ -1,0 +1,27 @@
+<section id="forecast-design">
+<div class="head">
+<p class="eyebrow">FORECAST DESIGN</p>
+<h2 class="title">A fair test: time-ordered and leakage-safe</h2>
+</div>
+<div class="two">
+<div class="col">
+<ul class="list">
+<li>Target: boardings per route per 15-minute slot, 117 routes</li>
+<li>Train 02:00–13:59 (5,616 rows); test 14:00–23:59 (4,680 rows) never seen</li>
+<li>Baseline: the last value known at forecast time</li>
+<li>Ridge, Random forest and XGBoost in Dataiku Visual ML</li>
+</ul>
+</div>
+<div class="col">
+<table class="tbl">
+<tr><th style="width:34%">Features</th><th style="width:33%">15 minutes ahead</th><th style="width:33%">60 minutes ahead</th></tr>
+<tr><td>Boardings lags</td><td>1–8</td><td>4–8 only</td></tr>
+<tr><td>Alightings lags</td><td>1–4</td><td>4 only</td></tr>
+<tr><td>Moving averages</td><td>ma4_h1, ma4_h4</td><td>ma4_h4 only</td></tr>
+<tr><td>Rejected</td><td>Route, slot, period</td><td>Same, plus lags under 4</td></tr>
+</table>
+<div class="card hl"><h3 class="card-title">Leak caught and discarded</h3><p class="card-text">A first session with a random split scored MAE 11.4 and R² 0.81. Too good to be true, so we rebuilt it on the time split.</p></div>
+</div>
+</div>
+<aside>Two horizons, one direct model each. The 60-minute model may only use information at least one hour old, so lags 1 to 3 and the short moving average are switched off. Route, slot and period were rejected so the model learns from recent demand, not from memorising a route or a clock time. The story of the leaky first session shows we checked our own work: a random split lets the model peek at neighbouring slots from the same afternoon.</aside>
+</section>

@@ -1,0 +1,16 @@
+<section id="forecast-results">
+<div class="head">
+<p class="eyebrow">FORECAST RESULTS</p>
+<h2 class="title">Strong at 15 minutes, modest at 60</h2>
+</div>
+<div class="bars">
+<div class="barrow"><p class="barlabel">15 min · all test rows</p><div class="bartrack"><div class="bar bar-base" style="width:68.0%"><p class="val-base">baseline 20.41</p></div><div class="bar bar-model" style="width:55.6%"><p class="val-model">model 16.68</p></div></div><p class="gain">+18.3%</p></div>
+<div class="barrow"><p class="barlabel">15 min · evening peak</p><div class="bartrack"><div class="bar bar-base" style="width:86.8%"><p class="val-base">baseline 26.04</p></div><div class="bar bar-model" style="width:69.9%"><p class="val-model">model 20.96</p></div></div><p class="gain">+19.5%</p></div>
+<div class="barrow"><p class="barlabel">15 min · off-peak</p><div class="bartrack"><div class="bar bar-base" style="width:55.5%"><p class="val-base">baseline 16.65</p></div><div class="bar bar-model" style="width:46.1%"><p class="val-model">model 13.83</p></div></div><p class="gain">+17.0%</p></div>
+<div class="barrow"><p class="barlabel">60 min · all test rows</p><div class="bartrack"><div class="bar bar-base" style="width:75.8%"><p class="val-base">baseline 22.73</p></div><div class="bar bar-model" style="width:71.1%"><p class="val-model">model 21.33</p></div></div><p class="gain">+6.1%</p></div>
+<div class="barrow"><p class="barlabel">60 min · evening peak</p><div class="bartrack"><div class="bar bar-base" style="width:93.8%"><p class="val-base">baseline 28.13</p></div><div class="bar bar-model" style="width:88.9%"><p class="val-model">model 26.66</p></div></div><p class="gain">+5.2%</p></div>
+<div class="barrow"><p class="barlabel">60 min · off-peak</p><div class="bartrack"><div class="bar bar-base" style="width:63.8%"><p class="val-base">baseline 19.13</p></div><div class="bar bar-model" style="width:59.3%"><p class="val-model">model 17.78</p></div></div><p class="gain">+7.0%</p></div>
+</div>
+<p class="note">MAE in boardings per route per 15-minute slot (lower is better), test window 14:00–23:59. Grey bars: last known value. Teal bars: Ridge model. Right: MAE gain.</p>
+<aside>Read the chart as model against baseline. At 15 minutes the error drops by 17 to 20 percent in every segment, strongest in the evening peak at 19.5 percent. At 60 minutes the gain is only 5 to 7 percent, so we call that view indicative. The model also beats the baseline on RMSE and WAPE in all six cells. Be honest about size: WAPE is about 31 percent at 15 minutes, so this is decision support, not an exact head count. The evening peak is 16:00 to 19:59; the morning peak was in training only.</aside>
+</section>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DemandPulse Team 7</title>
+<style>
+:root{--bg:#071427;--card:#12294a;--card2:#16335c;--ink:#eaf1fb;--mut:#9db2cc;--line:#27456f;--red:#e4002b;--teal:#19b5a5;--green:#3ccf7a;--amber:#f5b700;--pink:#ff5a73;--blue:#3b8cff;--grey:#6f86a3}
+[data-theme=light]{--bg:#eef2f8;--card:#fff;--card2:#f1f5fa;--ink:#0a1f3c;--mut:#566a85;--line:#d3dde9;--grey:#a9b6c7;--teal:#0e9488;--green:#1d9f58;--amber:#c98f00;--pink:#d6334b;--blue:#1f6fe0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif}
+.w{max-width:1120px;margin:0 auto;padding:0 16px}
+.top{position:sticky;top:0;z-index:5;background:linear-gradient(135deg,#071427,#0f3a6d);border-bottom:3px solid var(--red);color:#fff}
+.brand{display:flex;align-items:center;gap:12px;padding:12px 0 4px}.brand h1{margin:0;font-size:24px}.brand p{margin:0;color:#b9cde6;font-size:12.5px}
+.bar0{width:12px;height:36px;background:var(--red);border-radius:3px}
+.ghost{margin-left:auto;background:transparent;color:#fff;border:1px solid #5a7aa6;border-radius:20px;padding:5px 12px;cursor:pointer}
+nav{display:flex;gap:4px;overflow-x:auto;padding:4px 0 8px}
+nav button{background:transparent;color:#cfe0f5;border:0;border-bottom:3px solid transparent;padding:6px 12px;cursor:pointer;font-size:14px;white-space:nowrap}
+nav button.on{color:#fff;border-bottom-color:var(--red);font-weight:600}
+.ban{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:8px;padding:10px 14px;margin:14px 0;font-size:13.5px}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 14px}
+.k>div{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:10px;padding:10px 12px;transition:transform .15s}
+.k>div:hover{transform:translateY(-3px)}.k b{display:block;font-size:24px}.k span{color:var(--mut);font-size:12px}
+.t2{border-top-color:var(--green)!important}.t3{border-top-color:var(--amber)!important}.t4{border-top-color:var(--pink)!important}.t5{border-top-color:var(--blue)!important}
+.pane{display:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}.pane.on{display:block}
+h2{margin:0 0 4px;font-size:19px}p{margin:6px 0;color:var(--mut)}.sm{font-size:12px;color:var(--mut)}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.seg button,.chip{background:transparent;color:var(--ink);border:0;padding:6px 14px;cursor:pointer;font-size:13px}
+.seg button.on{background:var(--red);color:#fff}
+.chip{border:1px solid var(--line);border-radius:16px;padding:4px 12px}.chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.g2{display:grid;grid-template-columns:2fr 1fr;gap:16px}@media(max-width:800px){.g2{grid-template-columns:1fr}}
+.row{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;padding:8px;border-radius:8px;cursor:pointer;border:1px solid transparent}
+.row:hover{background:var(--card2)}.row.sel{border-color:var(--teal);background:var(--card2)}.lab small{display:block;color:var(--mut);font-size:11px}
+.bw{display:flex;flex-direction:column;gap:3px}.bar{height:18px;border-radius:4px;min-width:34px;transform-origin:left;animation:gr .5s ease-out}
+.bar span{font-size:11px;padding-left:6px;line-height:18px;color:#fff;white-space:nowrap}.bar.m{background:linear-gradient(90deg,var(--teal),var(--blue))}.bar.n{background:var(--grey)}
+@keyframes gr{from{transform:scaleX(0)}}
+.pos{color:var(--green);font-weight:700}.neg{color:var(--pink);font-weight:700}
+.hero{background:var(--card2);border-radius:10px;padding:14px;border-left:4px solid var(--red)}.big{font-size:42px;font-weight:800;line-height:1.1}
+.note{font-size:12.5px;color:var(--mut)}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;white-space:nowrap}
+th{color:var(--mut);cursor:pointer;user-select:none}th:hover{color:var(--ink)}tbody tr{cursor:pointer}tbody tr:hover,tr.sel{background:var(--card2)}
+.sc{overflow-x:auto}
+.p{position:relative;height:12px;width:120px;background:var(--line);border-radius:6px;display:inline-block;vertical-align:middle;margin-right:6px}
+.p i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:linear-gradient(90deg,var(--teal),var(--amber))}.p u{position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--red)}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:1px 8px;font-size:11px;color:var(--mut)}
+.det{margin-top:12px;background:var(--card2);border-radius:10px;padding:12px 14px;border-left:4px solid var(--teal)}
+.fl{display:inline-block;border-radius:10px;padding:2px 9px;font-size:12px;margin:2px 4px 2px 0;color:#fff}
+.ring{display:flex;gap:18px;align-items:center;flex-wrap:wrap}.ring svg{width:150px;height:150px}.ring text{fill:var(--ink);font-weight:800;font-size:22px}
+.stack{display:flex;height:22px;border-radius:11px;overflow:hidden;margin:6px 0;max-width:420px}.stack i{display:block;font-style:normal;color:#fff;font-size:12px;text-align:center;line-height:22px}
+.tabs2{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.card3{background:var(--card2);border-radius:10px;padding:14px;border-left:4px solid var(--green)}
+ul{margin:6px 0 6px 18px;padding:0}li{margin:5px 0}
+</style></head><body>
+<div class="top"><div class="w"><div class="brand"><span class="bar0"></span><div><h1>DemandPulse</h1><p>RTA Future Move Hackathon - Team 7 - Dubai bus network: demand forecast, capacity and reliability flags, cost-neutral swap. Hackathon prototype, not an official RTA publication.</p></div><button class="ghost" id="theme">Light / Dark</button></div>
+<nav id="tabs"><button data-t="fc" class="on">Forecast</button><button data-t="cap">Capacity and reliability</button><button data-t="sw">Swap scenario</button><button data-t="dec">Decision</button><button data-t="ag">Agents and limits</button></nav></div></div>
+<div class="w">
+<div class="ban"><b>Data period:</b> ACTUAL observations for one day, Monday 15 Dec 2025 (Nol card taps, bus running times, fleet list). GTFS is the planned Sep-Dec 2026 timetable and is not compared with 2025 as the same period. No weekly, seasonal or event claims are made.</div>
+<div class="k" id="kpis"></div>
+
+<section class="pane on" id="p_fc"><h2>Can we see route demand 15 and 60 minutes ahead?</h2>
+<p>Boardings per route and 15-minute slot for 117 routes (88.5% of boardings). Trained on 02:00-13:59, tested on 14:00-23:59 (never seen). Baseline = the last value known at forecast time. Click a row to select a segment.</p>
+<div class="ctl"><div class="seg" id="hz"><button data-v="15" class="on">15 min ahead</button><button data-v="60">60 min ahead</button></div>
+<div class="seg" id="mt"><button data-v="MAE" class="on">MAE</button><button data-v="RMSE">RMSE</button><button data-v="WAPE">WAPE %</button><button data-v="MAPE">MAPE %</button></div></div>
+<div class="g2"><div id="bars"></div><div class="hero" id="hero"></div></div>
+<p class="sm"><span style="color:var(--teal)">&#9632;</span> model (Ridge regression) &nbsp; <span style="color:var(--grey)">&#9632;</span> baseline. Lower is better. Ridge was chosen by lowest test MAE (15 min: Ridge 16.72, Random forest 16.96, XGBoost 17.45; 60 min: Ridge 21.39, Random forest 21.96, XGBoost 22.07). Predictions clipped at 0. Errors remain large; use as decision support, not exact counts.</p></section>
+
+<section class="pane" id="p_cap"><h2>Where capacity and reliability do not match demand</h2>
+<div class="k" id="capk"></div>
+<p class="sm">Demand pressure = card-tap boardings per offered seat per hour: a screening proxy, not on-board load (cash and other payments are not in Nol taps). 166 of 200 routes and 3,001 of 3,727 route-hours match the running-time data; the rest cannot be judged. Top 17 routes by boardings shown. Click a header to sort, click a row for details.</p>
+<div class="ctl" id="fl"><button class="chip on" data-f="all">All</button><button class="chip" data-f="high">Has high-pressure hour</button><button class="chip" data-f="under">Has under-used hours</button><button class="chip" data-f="late">Has unreliable hours</button><input id="q" placeholder="Search route" style="padding:5px 10px;border-radius:16px;border:1px solid var(--line);background:var(--card2);color:var(--ink)"></div>
+<div class="sc"><table><thead id="th"></thead><tbody id="rt"></tbody></table></div><div class="det" id="det"></div></section>
+
+<section class="pane" id="p_sw"><h2>Cost-neutral bus-swap scenario <span class="tag">WHAT-IF, NOT MEASURED</span></h2>
+<p>Same buses, same trips, same hour: move a large bus from an under-used route-hour to a high-pressure route-hour with a smaller bus. A donor must stay at or below 0.50 after the swap. No trip is removed.</p>
+<div class="ring"><svg viewBox="0 0 120 120" id="ringsvg"></svg><div><div class="k" id="sck" style="margin:0"></div><div class="stack" id="stack"></div></div></div>
+<p class="sm">13 of the 28 high-pressure route-hours fall below 1.0 in the scenario; 15 remain and need other measures (a standby trip) or on-board load data to confirm.</p></section>
+
+<section class="pane" id="p_dec"><h2>What should RTA change, why, and what difference could it make?</h2>
+<div class="tabs2" id="dtabs"></div><div class="card3" id="dcard"></div>
+<p><b>Guardrails:</b> <span class="tag">no fare changes</span> <span class="tag">no frequency cuts (network equity)</span> <span class="tag">no new infrastructure</span> <span class="tag">driver rest respected</span> <span class="tag">vehicle types respected</span></p>
+<p class="sm">Scenario figures come from one day of data and need on-board load (APC) confirmation before rollout.</p></section>
+
+<section class="pane" id="p_ag"><h2>AI agent layer</h2><p id="agent"></p>
+<ul><li><b>Agent 1 - Demand and capacity analyst:</b> reads one route summary row; explains capacity vs demand.</li><li><b>Agent 2 - Reliability analyst:</b> reads delay and late-hour fields; suggests a running-time fix.</li><li><b>Agent 3 - Coordinator and guardrail:</b> merges both views into CHANGE / WHY / MEASURABLE / GUARDRAIL CHECK and flags conflicts.</li></ul>
+<p class="sm">Agents see route-level summary tables only (no card or driver identifiers) and never compute numbers; every figure comes from Dataiku recipes.</p>
+<h2 style="margin-top:14px">Data handling and limits</h2><ul>
+<li>NOL_ID and Driver_id are excluded from every analytical dataset; source datasets were not modified.</li>
+<li>One observed day: intraday forecasts only. The test half contains the evening peak but not the morning peak.</li>
+<li>Fleet capacity 0 treated as unknown; 99.7% of running-time events matched a bus with valid capacity.</li>
+<li>6,283 running-time events with an hour outside 0-23 were excluded; 34 of 200 routes have no running-time match.</li>
+<li>Thresholds (1.0, 0.25, 5 min, 30%) are assumptions chosen for screening and can be tuned.</li></ul></section>
+<p class="sm">Snapshot of Dataiku outputs forecast_metrics, decision_summary and route_evidence_card (17 Nov 2026).</p>
+</div>
+<script>
+var AGENT_MODE='RULE-BASED';
+var S={taps:1056343,hi:28,hip:1.1,un:1262,m:3001,ur:761,sw:18,below:13,moved:792};
+var SEG={ALL:'All test rows',PM:'Evening peak (16-20h)',OFF:'Off-peak'};
+var D={15:{ALL:{n:4680,MAE:[16.680,20.409],RMSE:[23.794,29.491],MAPE:[47.454,56.446],WAPE:[30.889,37.796]},
+PM:{n:1872,MAE:[20.959,26.042],RMSE:[28.664,35.862],MAPE:[38.429,47.221],WAPE:[27.456,34.115]},
+OFF:{n:2808,MAE:[13.827,16.654],RMSE:[19.895,24.334],MAPE:[54.138,63.279],WAPE:[35.357,42.586]}},
+60:{ALL:{n:4680,MAE:[21.334,22.731],RMSE:[30.533,33.319],MAPE:[60.680,60.926],WAPE:[39.509,42.095]},
+PM:{n:1872,MAE:[26.661,28.131],RMSE:[37.528,38.872],MAPE:[43.660,46.446],WAPE:[34.926,36.852]},
+OFF:{n:2808,MAE:[17.783,19.130],RMSE:[24.797,29.033],MAPE:[73.286,71.650],WAPE:[45.474,48.918]}}};
+var R=[['F24',12201,18,0.569,0,3,0,37.75,105.8],['F15',11405,18,0.797,0,1,6,87.5,92.4],['88',9661,18,0.617,0,0,7,168.5,70.0],['28',9400,18,0.635,0,1,0,101.0,104.1],['F23',8983,18,0.584,0,2,0,58.5,100.7],['F22',8728,18,0.514,0,8,0,42.0,108.6],['13D',8462,8,0.377,0,11,3,77.0,113.0],['C01',8345,18,1.867,1,12,9,162.25,113.0],['F23A',8285,18,0.606,0,2,0,44.0,101.8],['93',7871,7,0.570,0,2,0,82.0,70.6],['310',7856,7,0.826,0,0,6,135.25,70.2],['C10',7622,18,0.670,0,1,7,139.0,68.1],['F27',7542,18,0.884,0,0,11,96.25,86.1],['X13',7240,18,0.510,0,0,10,204.0,69.7],['C26',6606,18,0.582,0,3,3,112.0,68.7],['X25',6537,7,0.841,0,7,2,103.5,108.0],['F46',6465,7,0.713,0,1,6,164.0,66.0]];
+var DEC=[{t:'1. Right-size vehicles by hour',c:'Pilot the swaps: move large buses from under-used route-hours to high-pressure route-hours. Keep every trip.',w:'1,262 route-hours run at or below 25% boardings per seat while 28 reach 1.0 or more. In the scenario 18 swaps move 792 seats and 13 of the 28 high-pressure route-hours fall below 1.0, with 0 trips removed.',m:'Demand pressure at the busiest hour of each pilot route, before and after; on-board load from APC data.'},
+{t:'2. Review running-time buffers',c:'Review the scheduled running time and recovery buffer on route-hours where 30% or more of departures run over 5 minutes late.',w:'761 route-hours (25% of matched) meet this; X13 (median 204 s), 88 (168 s), F46 (164 s) and C01 (162 s) stand out.',m:'Share of departures more than 5 minutes late, per route-hour; median delay.'},
+{t:'3. Use the 15-minute forecast as an early warning',c:'Feed the 15-minute forecast into standby and short-turn decisions; treat the 60-minute view as indicative.',w:'The model has 18.3% lower MAE than the last-slot baseline at 15 minutes (19.5% in the evening peak) but only 6.1% lower at 60 minutes.',m:'Forecast WAPE on live days, per horizon and peak period.'}];
+var st={h:15,m:'MAE',s:'ALL'},rs={f:'all',q:'',k:1,d:-1,sel:'C01'},dsel=0;
+function $(i){return document.getElementById(i)}
+function tile(v,l,c){return '<div class="'+(c||'')+'"><b>'+v+'</b><span>'+l+'</span></div>'}
+function sgn(g){return (g>0?'+':'')+g.toFixed(1)+'%'}
+$('kpis').innerHTML=[tile(S.taps.toLocaleString(),'card taps analysed (15 Dec 2025)'),tile('117','routes forecast (88.5% of boardings)'),tile('+18.3%','15-min MAE gain vs baseline','t2'),tile('+6.1%','60-min MAE gain vs baseline','t2'),tile(S.hi,'high-pressure route-hours','t4'),tile(S.un.toLocaleString(),'under-used route-hours','t3'),tile(S.ur,'unreliable route-hours','t3'),tile('0','trips removed in the scenario','t5')].join('');
+$('capk').innerHTML=[tile(S.hi,'high-pressure route-hours (carry '+S.hip+'% of boardings)','t4'),tile(S.un.toLocaleString(),'under-used of '+S.m.toLocaleString()+' matched','t3'),tile(S.ur,'unreliable route-hours','t3')].join('');
+$('sck').innerHTML=[tile(S.sw,'swaps','t2'),tile(S.moved,'seats reallocated','t2'),tile('0','trips removed','t5')].join('');
+(function(){var c=2*Math.PI*52,f=S.below/S.hi*c;$('ringsvg').innerHTML='<circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="12"/><circle cx="60" cy="60" r="52" fill="none" stroke="var(--green)" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+f+' '+c+'" transform="rotate(-90 60 60)"/><text x="60" y="66" text-anchor="middle">'+S.below+'/'+S.hi+'</text>';
+$('stack').innerHTML='<i style="background:var(--green);width:'+(S.below/S.hi*100)+'%">'+S.below+' resolved</i><i style="background:var(--amber);width:'+((S.hi-S.below)/S.hi*100)+'%">'+(S.hi-S.below)+' remain</i>'})();
+function renderFc(){var d=D[st.h],mt=st.m,u=(mt==='MAE'||mt==='RMSE')?' boardings per route-slot':' %';var keys=Object.keys(d);
+var mx=Math.max.apply(null,keys.map(function(k){return Math.max(d[k][mt][0],d[k][mt][1])}));
+$('bars').innerHTML=keys.map(function(k){var v=d[k][mt],g=(1-v[0]/v[1])*100;return '<div class="row'+(k===st.s?' sel':'')+'" data-s="'+k+'"><div class="lab">'+SEG[k]+'<small>'+d[k].n.toLocaleString()+' route-slots</small></div><div class="bw"><div class="bar m" style="width:'+(v[0]/mx*100)+'%"><span>'+v[0].toFixed(2)+'</span></div><div class="bar n" style="width:'+(v[1]/mx*100)+'%"><span>'+v[1].toFixed(2)+'</span></div></div><div class="'+(g>0?'pos':'neg')+'">'+sgn(g)+'</div></div>'}).join('');
+var v=d[st.s][mt],g=(1-v[0]/v[1])*100,msg=g<=0?'The model does NOT beat the baseline here. MAPE is unstable at low counts, so WAPE is the fairer measure.':(st.h===15?'A clear gain at 15 minutes.':'A modest gain at 60 minutes: treat as indicative.');
+if(mt==='WAPE')msg+=' WAPE = total absolute error divided by total boardings.';if(mt==='MAPE'&&g>0)msg+=' MAPE only counts slots with at least 5 boardings.';
+$('hero').innerHTML='<div class="big '+(g>0?'pos':'neg')+'">'+sgn(g)+'</div><div><b>'+mt+'</b> vs last-known-slot baseline<br>'+SEG[st.s]+', '+st.h+' min ahead</div><p>Model <b>'+v[0].toFixed(2)+'</b> vs baseline <b>'+v[1].toFixed(2)+'</b>'+u+'</p><p class="note">'+msg+'</p>'}
+function say(r){var t='Route '+r[0]+': '+r[1].toLocaleString()+' boardings on 15 Dec 2025, busiest hour '+('0'+r[2]).slice(-2)+':00.';
+if(r[4]>0)t+=' '+r[4]+' hour(s) with high demand pressure (max '+r[3].toFixed(2)+'): consider a larger bus at those hours and confirm on-board load.';
+if(r[5]>0)t+=' '+r[5]+' hour(s) under-used: right-size the vehicle, keep all trips.';
+if(r[6]>0)t+=' '+r[6]+' hour(s) with 30% or more of departures over 5 min late: review running-time buffers.';
+if(!r[4]&&!r[5]&&!r[6])t+=' No change suggested.';return t}
+var HD=[['Route',0],['Boardings',1],['Peak hour',2],['Max pressure (red = 1.0)',3],['High hrs',4],['Under-used hrs',5],['Late hrs',6],['Median delay s',7],['Avg bus seats',8]];
+function renderRt(){$('th').innerHTML='<tr>'+HD.map(function(h){return '<th data-k="'+h[1]+'">'+h[0]+(rs.k===h[1]?(rs.d<0?' &#9660;':' &#9650;'):'')+'</th>'}).join('')+'</tr>';
+var rows=R.filter(function(r){if(rs.q&&r[0].toLowerCase().indexOf(rs.q)<0)return false;if(rs.f==='high')return r[4]>0;if(rs.f==='under')return r[5]>0;if(rs.f==='late')return r[6]>0;return true}).sort(function(a,b){var x=a[rs.k],y=b[rs.k];return (x<y?-1:x>y?1:0)*rs.d});
+$('rt').innerHTML=rows.map(function(r){return '<tr data-r="'+r[0]+'"'+(r[0]===rs.sel?' class="sel"':'')+'><td><b>'+r[0]+'</b></td><td>'+r[1].toLocaleString()+'</td><td>'+('0'+r[2]).slice(-2)+':00</td><td><span class="p"><i style="width:'+Math.min(r[3]/2,1)*100+'%"></i><u></u></span>'+r[3].toFixed(2)+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td><td>'+r[6]+'</td><td>'+r[7]+'</td><td>'+r[8].toFixed(0)+'</td></tr>'}).join('')||'<tr><td colspan="9">No route matches.</td></tr>';
+var s=R.filter(function(r){return r[0]===rs.sel})[0];
+$('det').innerHTML=s?'<b>Route '+s[0]+'</b> <span class="tag">'+AGENT_MODE+' commentary</span><div>'+(s[4]?'<span class="fl" style="background:var(--pink)">high pressure x'+s[4]+'</span>':'')+(s[5]?'<span class="fl" style="background:var(--amber)">under-used x'+s[5]+'</span>':'')+(s[6]?'<span class="fl" style="background:var(--blue)">unreliable x'+s[6]+'</span>':'')+'</div><p style="color:var(--ink)">'+say(s)+'</p>':'Select a route.'}
+function renderDec(){$('dtabs').innerHTML=DEC.map(function(d,i){return '<button class="chip'+(i===dsel?' on':'')+'" data-i="'+i+'">'+d.t+'</button>'}).join('');var d=DEC[dsel];
+$('dcard').innerHTML='<p style="color:var(--ink)"><b>Change:</b> '+d.c+'</p><p style="color:var(--ink)"><b>Why:</b> '+d.w+'</p><p style="color:var(--ink)"><b>Measurable difference to track:</b> '+d.m+'</p>'}
+$('agent').textContent=AGENT_MODE==='RULE-BASED'?'Status: route commentary on this page is RULE-BASED (deterministic text generated from the table values). The LLM-written case cards, whose numbers are checked against the facts (24 of 24 checks passed), are shown in the DemandPulse Ops webapp, tab Actions and agents.':'Status: commentary produced by the LLM agent chain on summary tables and checked against the guardrails.';
+function seg(id,key){$(id).addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st[key]=b.getAttribute('data-v');Array.prototype.forEach.call($(id).children,function(x){x.classList.toggle('on',x===b)});renderFc()})}
+seg('hz','h');seg('mt','m');
+$('bars').addEventListener('click',function(e){var r=e.target.closest('.row');if(!r)return;st.s=r.getAttribute('data-s');renderFc()});
+$('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var t=b.getAttribute('data-t');Array.prototype.forEach.call($('tabs').children,function(x){x.classList.toggle('on',x===b)});['fc','cap','sw','dec','ag'].forEach(function(p){$('p_'+p).classList.toggle('on',p===t)})});
+$('fl').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;rs.f=b.getAttribute('data-f');Array.prototype.forEach.call(document.querySelectorAll('#fl .chip'),function(x){x.classList.toggle('on',x===b)});renderRt()});
+$('q').addEventListener('input',function(e){rs.q=e.target.value.trim().toLowerCase();renderRt()});
+$('th').addEventListener('click',function(e){var h=e.target.closest('th');if(!h)return;var k=+h.getAttribute('data-k');if(rs.k===k)rs.d=-rs.d;else{rs.k=k;rs.d=-1}renderRt()});
+$('rt').addEventListener('click',function(e){var r=e.target.closest('tr');if(!r||!r.getAttribute('data-r'))return;rs.sel=r.getAttribute('data-r');renderRt()});
+$('dtabs').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;dsel=+b.getAttribute('data-i');renderDec()});
+$('theme').addEventListener('click',function(){var h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+renderFc();renderRt();renderDec();
+</script></body></html>

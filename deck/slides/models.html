@@ -1,0 +1,25 @@
+<section id="models" class="alt">
+<div class="head">
+<p class="eyebrow">MODEL CHOICE</p>
+<h2 class="title">The simplest model wins at both horizons</h2>
+</div>
+<div class="two">
+<div class="col">
+<table class="tbl">
+<tr><th style="width:22%">Horizon</th><th style="width:33%">Model</th><th style="width:15%">MAE</th><th style="width:15%">RMSE</th><th style="width:15%">R²</th></tr>
+<tr style="background:#DCEFEC"><td>15 min</td><td>Ridge (selected)</td><td>16.717</td><td>23.807</td><td>0.762</td></tr>
+<tr><td>15 min</td><td>Random forest</td><td>16.964</td><td>24.648</td><td>0.745</td></tr>
+<tr><td>15 min</td><td>XGBoost</td><td>17.446</td><td>25.409</td><td>0.729</td></tr>
+<tr style="background:#DCEFEC"><td>60 min</td><td>Ridge (selected)</td><td>21.388</td><td>30.583</td><td>0.608</td></tr>
+<tr><td>60 min</td><td>Random forest</td><td>21.958</td><td>32.140</td><td>0.567</td></tr>
+<tr><td>60 min</td><td>XGBoost</td><td>22.065</td><td>32.867</td><td>0.547</td></tr>
+</table>
+<p class="note">Dataiku Visual ML, scored on the 4,680-row test set.</p>
+</div>
+<div class="col">
+<div class="card"><h3 class="card-title">Why Ridge won</h3><p class="card-text">The best clue for the next slot is recent demand on the same route. A linear model on recent lags captures it; the tree models found nothing extra.</p></div>
+<div class="card"><h3 class="card-title">What drives it</h3><p class="card-text">15 minutes: the short moving average, then lags 2 and 1. 60 minutes: boardings lag 4, then lags 5, 8 and 7.</p></div>
+</div>
+</div>
+<aside>Three algorithms per horizon, same explicit train and test sets. Ridge has the lowest MAE and RMSE and the highest R² at both horizons. Feature importance confirms the logic: recent demand on the route is the signal. The small difference from the dashboard MAE, 16.68 versus 16.717, is because the dashboard metrics clip negative predictions to zero.</aside>
+</section>

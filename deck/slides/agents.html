@@ -1,0 +1,22 @@
+<section id="agents">
+<div class="head">
+<p class="eyebrow">AI AGENTS</p>
+<h2 class="title">Agents explain; a checker verifies every number</h2>
+</div>
+<div class="flowrow">
+<div class="node"><h3 class="node-title">Case file</h3><p class="node-text">12 cases of summary facts, no personal IDs</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node"><h3 class="node-title">Specialists</h3><p class="node-text">Congestion and reliability; supply and demand</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node"><h3 class="node-title">Coordinator</h3><p class="node-text">4-line card: change, why, measure, guardrails</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node-hl"><h3 class="node-title">Checker</h3><p class="node-text">Numbers from the facts, no banned advice, format</p></div>
+<x-connector head="end" class="conn"></x-connector>
+<div class="node"><h3 class="node-title">Webapp</h3><p class="node-text">Shows only verified cards; humans approve</p></div>
+</div>
+<div class="two">
+<div class="stat"><p class="big-teal">24 of 24</p><p class="stat-label">AI answers passed: 12 specialist views and 12 coordinator cards</p></div>
+<div class="card"><h3 class="card-title">What the check proves, and what it does not</h3><p class="card-text">It proves every number comes from the data and no fare rise, trip cut, bus lane or skipped driver rest is suggested. It does not prove the reasoning is wise, so two human confirmations stay mandatory.</p></div>
+</div>
+<aside>The language model never calculates. It receives a short fact sheet built by a Python recipe, written by the Flow. Two specialist roles and a coordinator run as Prompt recipes through Dataiku’s LLM Mesh. A second Python recipe checks every answer, and the webapp shows a card as AI-written, numbers verified only when both of its answers pass; otherwise it falls back to the rule-based suggestion. Next step: move to native Dataiku Agents with read-only dataset tools, keeping the checker in front.</aside>
+</section>

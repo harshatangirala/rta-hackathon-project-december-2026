@@ -1,0 +1,19 @@
+<section id="data">
+<div class="head">
+<p class="eyebrow">THE DATA</p>
+<h2 class="title">One real day of taps and running times</h2>
+</div>
+<table class="tbl">
+<tr><th style="width:18%">Dataset</th><th style="width:36%">One row is</th><th style="width:21%">Period</th><th style="width:25%">Size</th></tr>
+<tr><td>Nol card taps</td><td>One check-in or check-out</td><td>Actual, Mon 15 Dec 2025</td><td>1,056,343 taps</td></tr>
+<tr><td>Running times (AVL)</td><td>One trip at one stop, scheduled vs actual</td><td>Actual, same day</td><td>259,435 rows</td></tr>
+<tr><td>Fleet list</td><td>One vehicle, type and capacity</td><td>Reference</td><td>3,264 vehicles</td></tr>
+<tr><td>Stops (GTFS)</td><td>One stop, name and coordinates</td><td>Planned, Sep to Dec 2026</td><td>2,607 stops placed (98.4%)</td></tr>
+</table>
+<div class="cards">
+<div class="card"><h3 class="card-title">Period rule</h3><p class="card-text">2025 actuals are never compared with the 2026 plan; stops only place dots on a map.</p></div>
+<div class="card"><h3 class="card-title">Privacy</h3><p class="card-text">Card and driver IDs dropped at cleaning. The AI sees aggregates only. No data left Dataiku.</p></div>
+<div class="card"><h3 class="card-title">Quality</h3><p class="card-text">Blank routes, missing delays and zero capacities were flagged and handled.</p></div>
+</div>
+<aside>Four catalogue datasets, linked unchanged. Stress the period rule: Nol and running times are actual 2025 data for one Monday; the stops file is from the planned 2026 timetable and only gives map positions. Privacy: card and driver IDs never reach an analytical dataset. Every total was reconciled back to the source: 13,837 route-slot rows sum to 1,056,237 cleaned taps.</aside>
+</section>
